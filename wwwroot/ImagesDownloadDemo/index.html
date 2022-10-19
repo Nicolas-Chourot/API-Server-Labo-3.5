@@ -1,63 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        body {
-            width: 600px;
-            margin: auto;
-        }
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            body {
+                width: 600px;
+                margin: auto;
+            }
 
-        #base64 {
-            font-size: 0.75em;
-            width: 500px;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            border: 1px solid blue;
-            word-wrap: break-word;
-            padding: 4px;
-        }
+            #base64 {
+                font-size: 0.75em;
+                width: 500px;
+                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                border: 1px solid blue;
+                word-wrap: break-word;
+                padding: 4px;
+            }
+            .ImageUploader {
+                align-items: center;
+                width: 600px;
+                height: 344px;  /* 600 X 0,57333 ratio */
+                border: 1px solid lightgray;
+            }
+            div2 {
+                border:1px solid green;
+            }
+        </style>
+    </head>
 
-        .imageUploader {
-            display: grid;
-            grid-template-columns: auto 0px 0px;
-            align-items: center;
-            text-align: center;
-            width: 600px;
-            height: 400px;
-            padding: 10px;
-            border: 1px solid blue;
-            /* So 100% means 100% */
-            box-sizing: border-box;
-        }
+    <body>
 
-        .UploadedImage {
-            width: 100%;
-            height: 100%;
-            background-position: center;
-            background-size: contain;
-            background-repeat: no-repeat;
-        }
-    </style>
-</head>
+        <div id='photo1' class='ImageUploader' defaultImage='images/No_Image.png' waitingImage='images/writing.gif'>
+        </div>
+        <div id='photo2' class='ImageUploader' defaultImage='images/No_Image.png' waitingImage='images/writing.gif'>
+        </div>
+        <button id="showCode">Voir le code base64</button>
+        <div id="base64"></div>
 
-<body>
-
-    <div class='imageUploader' id='photo' controlId='ImageControl' imageSrc='images/No_Image.png'
-        waitingImage='images/writing.gif'>
-    </div>
-
-    <button id="showCode">Voir le code base64</button>
-    <div id="base64"></div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="js/imagesDownloader.js"></script>
-    <script defer>
-        $("#showCode").click(function () { $("#base64").text(getImageData("ImageControl")); console.log("clic") })
-    </script>
-</body>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="js/imagesDownloader.js"></script>
+        <script defer>
+            $("#showCode").click(function () { $("#base64").text(getImageData("photo"));})
+            
+        </script>
+    </body>
 
 </html>
