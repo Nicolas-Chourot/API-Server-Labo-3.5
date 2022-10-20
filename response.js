@@ -61,7 +61,8 @@ module.exports =
             this.content('text/html', content);
         }
         content(contentType, content) {
-            this.res.writeHead(200, { 'content-type': contentType });
+            // let the browers cache locally the receiverd content
+            this.res.writeHead(200, { 'content-type': contentType, "Cache-Control": "public, max-age=31536000" });
             this.end(content);
         }
         noContent() {
