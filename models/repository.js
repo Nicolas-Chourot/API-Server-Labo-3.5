@@ -165,6 +165,14 @@ class Repository {
     }
     return false;
   }
+  bindExtraData(datas) {
+    let bindedDatas = [];
+    if (datas)
+      for (let data of datas) {
+        bindedDatas.push(this.bindExtraDataMethod(data));
+      };
+    return bindedDatas;
+  }
   getAll(params = null) {
     let objectsList = this.objects();
     if (this.bindExtraDataMethod != null) {

@@ -11,6 +11,7 @@
 const queryString = require("query-string");
 const Response = require('./response');
 const utilities = require('./utilities.js');
+let httpContext = null;
 module.exports =
     class HttpContext {
         constructor(req, res) {
@@ -22,7 +23,9 @@ module.exports =
             this.hostIp = req.headers['x-forwarded-for'] != undefined ? req.headers['x-forwarded-for'] : "127.0.0.1";
             this.response = new Response(this);
             this.payload = null;
+            httpContext = this;
         }
+        static get() { return httpContext; }
         getJSONPayload() {
             return new Promise(resolve => {
                 let body = [];

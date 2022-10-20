@@ -108,8 +108,9 @@ function getImage(id) {
     return target.css("background-image").replace(/^url\(['"](.+)['"]\)/, "$1");
 }
 function resetImage(id) {
-    let target = $(`#${id}_ImageContainer`);
-    setBackgroundImage(id, target.attr("defaultImage"));
+    let target = $(`#${id}`);
+    setImage(id, target.attr("defaultImage"));
+    clearImageData(id);
 }
 function setImage(id, url) {
     let target = $(`#${id}_ImageContainer`);
