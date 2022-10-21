@@ -235,7 +235,7 @@
                 $("#date_input").val(Date.now());
                 $("#title_input").val("");
                 $("#description_input").val("");
-                resetImage('image');
+                ImageUploader.resetImage('image');
             }
             function imageFromForm() {
                 if ($("#imageForm")[0].checkValidity()) {
@@ -244,7 +244,7 @@
                         GUID: $("#GUID_input").val(),
                         Title: $("#title_input").val(),
                         Description: $("#description_input").val(),
-                        ImageData: getImageData('image'),
+                        ImageData: ImageUploader.getImageData('image'),
                         Date: $("#date_input").val()
                     };
                     return image;
@@ -260,7 +260,7 @@
                 //$("#date_input").val(Date.now());
                 $("#title_input").val(image.Title);
                 $("#description_input").val(image.Description);
-                setImage('image', image.OriginalURL);
+                ImageUploader.setImage('image', image.OriginalURL);
             }
 
             function init_UI() {

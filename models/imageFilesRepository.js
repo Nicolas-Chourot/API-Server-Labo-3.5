@@ -38,13 +38,11 @@ module.exports =
         }
         static storeImageData(previousGUID, imageDataBase64) {
             if (imageDataBase64) {
-                let webpFormat = imageDataBase64.indexOf("webp") != -1;
-                if (webpFormat)
-                    console.log(clc.yellow("Warning - imageFilesRepository.js: Does not support thumbnail resize for webp image format!"));
+
                 // Remove MIME specifier
                 imageDataBase64 = imageDataBase64.split("base64,").pop();
 
-                const resizeImg = require('resize-img');
+                const sharp = require('sharp');
                 const thumbnailSize = 256;
                 const { v1: uuidv1 } = require('uuid');
 
@@ -58,35 +56,26 @@ module.exports =
                 let imageDataBinary = new Buffer.from(imageDataBase64, 'base64');
                 fs.writeFileSync(this.getServerImageFileURL(GUID), imageDataBinary);
 
-                if (!webpFormat) {
-                    // Store new image file in thumbnails folder
-                    let tempGUID = uuidv1();
-                    let tempFile = this.getServerThumbnailFileURL(tempGUID);
-                    fs.writeFileSync(tempFile, imageDataBinary);
-
-                    // compute thumbnail resizes dimension keeping proportion of original size
-                    var sizeOf = require('image-size');
-                    var dimensions = sizeOf(tempFile);
-                    let newHeight = 0;
-                    let newWidth = 0;
-                    if (dimensions.height > dimensions.width) {
-                        newWidth = dimensions.width * thumbnailSize / dimensions.height;
-                        newHeight = thumbnailSize;
-                    } else {
-                        newHeight = dimensions.height * thumbnailSize / dimensions.width;
-                        newWidth = thumbnailSize;
-                    }
-
-                    // resize new image thumbnail 
-                    (async () => {
-                        // Does not support resize for webp image format
-                        const thumbnailImage = await resizeImg(fs.readFileSync(tempFile), { width: newWidth, height: newHeight });
-                        fs.writeFileSync(this.getServerThumbnailFileURL(GUID), thumbnailImage);
-                        fs.unlinkSync(tempFile);
-                    })();
+                // Resize & store new image file in thumbnails folder
+                // compute thumbnail resizes dimension keeping proportion of original size
+                var sizeOf = require('image-size');
+                var dimensions = sizeOf(this.getServerImageFileURL(GUID));
+                let newHeight = 0;
+                let newWidth = 0;
+                if (dimensions.height > dimensions.width) {
+                    newWidth = Math.round(dimensions.width * thumbnailSize / dimensions.height);
+                    newHeight = thumbnailSize;
                 } else {
-                    fs.writeFileSync(this.getServerThumbnailFileURL(GUID), imageDataBinary);
+                    newHeight = Math.round(dimensions.height * thumbnailSize / dimensions.width);
+                    newWidth = thumbnailSize;
                 }
+                sharp(this.getServerImageFileURL(GUID))
+                    .resize(newWidth, newHeight)
+                    .toFile(this.getServerThumbnailFileURL(GUID))
+                    .then(() => {console.log("file resized") })
+                    .catch(err => {
+                        console.log(err)
+                    })
                 return GUID;
             } else
                 return previousGUID;

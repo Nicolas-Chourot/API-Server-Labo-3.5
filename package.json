@@ -10,11 +10,11 @@
   "author": "Nicolas Chourot",
   "license": "ISC",
   "dependencies": {
+    "cli-color": "^2.0.3",
     "date-and-time": "^2.4.1",
-    "query-string": "^7.1.1",
-    "uuid": "^8.3.2",
-    "resize-img": "^1.0.0",
     "image-size": "^1.0.0",
-    "cli-color": "^2.0.3"
+    "query-string": "^7.1.1",
+    "sharp": "^0.31.1",
+    "uuid": "^8.3.2"
   }
 }

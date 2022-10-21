@@ -111,8 +111,8 @@ class ImageUploader {
     }
     static resetImage(id) {
         let target = $(`#${id}`);
-        setImage(id, target.attr("defaultImage"));
-        clearImageData(id);
+        this.setImage(id, target.attr("defaultImage"));
+        this.clearImageData(id);
     }
     static setImage(id, url) {
         let target = $(`#${id}_ImageContainer`);
