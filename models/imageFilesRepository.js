@@ -42,6 +42,7 @@ module.exports =
                 // Remove MIME specifier
                 imageDataBase64 = imageDataBase64.split("base64,").pop();
 
+                //https://javascript.plainenglish.io/resize-an-image-using-nodejs-f5e57ac10419
                 const sharp = require('sharp');
                 const thumbnailSize = 256;
                 const { v1: uuidv1 } = require('uuid');
